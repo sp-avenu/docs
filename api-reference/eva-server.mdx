@@ -1,0 +1,140 @@
+# EVA Server API Reference
+
+The EVA Server is a FastAPI-based service that manages interview sessions and room creation. This document provides detailed information about the available endpoints and their usage.
+
+## Base URL
+
+```
+https://api.eva-ai.com/v1
+```
+
+## Authentication
+
+All API requests require an API token in the `X-API-Token` header:
+
+```http
+X-API-Token: your_api_token_here
+```
+
+## Endpoints
+
+### Create Interview Room
+
+```http
+POST /create
+```
+
+Creates a new interview room and generates necessary tokens.
+
+**Request Body:**
+```json
+{
+    "candidate_id": 123
+}
+```
+
+**Response:**
+```json
+{
+    "room_name": "room123",
+    "room_url": "https://eva-avenu.daily.co/room123",
+    "token": "generated_token_value",
+    "candidate_id": 123
+}
+```
+
+### Start Interview
+
+```http
+POST /start
+```
+
+Starts an interview session in the specified room.
+
+**Request Body:**
+```json
+{
+    "room_url": "https://eva-avenu.daily.co/room123",
+    "token": "your_token_here",
+    "candidate_id": 123
+}
+```
+
+**Response:**
+```json
+{
+    "detail": "Room started successfully"
+}
+```
+
+### Check Interview Status
+
+```http
+GET /interview_status/{candidate_id}
+```
+
+Checks if the interview for a given candidate is completed.
+
+**Response:**
+```json
+{
+    "interview_completed": true
+}
+```
+
+## Error Responses
+
+### 401 Unauthorized
+```json
+{
+    "detail": "Unauthorized"
+}
+```
+
+### 500 Internal Server Error
+```json
+{
+    "detail": "Failed to communicate with container manager"
+}
+```
+
+## Environment Variables
+
+The server requires the following environment variables:
+
+- `BASE_URL`: Base URL for the service
+- `DATA_API_KEY`: API key for data access
+- `CONTAINER_MANAGER_URL`: URL of the container manager service
+- `BOT_API_TOKEN`: API token for bot authentication
+- `BUCKET`: AWS S3 bucket name for storage
+
+## Rate Limiting
+
+The server implements rate limiting to prevent abuse:
+
+- 100 requests per minute per IP
+- 1000 requests per hour per API token
+
+## WebSocket Support
+
+The server supports WebSocket connections for real-time communication:
+
+```javascript
+const ws = new WebSocket('wss://api.eva-ai.com/v1/ws');
+```
+
+## Health Check
+
+```http
+GET /health
+```
+
+Returns the health status of the server:
+
+```json
+{
+    "status": "ok",
+    "version": "1.0.0",
+    "uptime": "2h 30m"
+}
+``` 

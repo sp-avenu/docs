@@ -1,0 +1,145 @@
+# Container Manager API Reference
+
+The Container Manager is a FastAPI service responsible for orchestrating EVA bot containers. This document provides detailed information about the available endpoints and their usage.
+
+## Base URL
+
+```
+http://container-manager:10410
+```
+
+## Authentication
+
+The Container Manager uses API token authentication:
+
+```http
+X-API-Token: your_api_token_here
+```
+
+## Endpoints
+
+### Start Interview Bot
+
+```http
+POST /start-interview
+```
+
+Starts a new EVA bot container for an interview session.
+
+**Request Body:**
+```json
+{
+    "room_url": "https://eva-avenu.daily.co/room123",
+    "token": "your_token_here",
+    "candidate_id": 123
+}
+```
+
+**Response:**
+```json
+{
+    "status": "success",
+    "container_id": "abc123",
+    "message": "Container started for interviewee 123"
+}
+```
+
+### Stop Interview Bot
+
+```http
+POST /stop-bot/{interviewee_id}
+```
+
+Stops the EVA bot container for a specific interviewee.
+
+**Response:**
+```json
+{
+    "status": "success",
+    "message": "Container for interviewee 123 stopped"
+}
+```
+
+### Health Check
+
+```http
+GET /health
+```
+
+Returns the health status of the container manager:
+
+```json
+{
+    "status": "ok"
+}
+```
+
+## Environment Variables
+
+The container manager requires the following environment variables:
+
+- `LOCAL_IMAGE`: Local Docker image name (default: "eva/bot:latest")
+- `ECR_IMAGE`: ECR image name for production use
+- `AWS_ACCESS_KEY_ID`: AWS access key for ECR
+- `AWS_SECRET_ACCESS_KEY`: AWS secret key for ECR
+- `AWS_REGION`: AWS region for ECR
+
+## Container Configuration
+
+The container manager supports the following container configurations:
+
+- **Memory Limit**: 2GB per container
+- **CPU Limit**: 1 CPU core per container
+- **Network**: Bridge network
+- **Auto Remove**: Containers are automatically removed after completion
+- **Environment Variables**:
+  - `URL`: Room URL
+  - `TOKEN`: Authentication token
+  - `INTERVIEWEE_ID`: Candidate ID
+
+## Error Handling
+
+### 404 Not Found
+```json
+{
+    "detail": "Image not found"
+}
+```
+
+### 500 Internal Server Error
+```json
+{
+    "detail": "Error starting container"
+}
+```
+
+## Container Lifecycle
+
+1. **Creation**: Container is created with specified environment variables
+2. **Startup**: Container is started and connected to the interview room
+3. **Monitoring**: Container health is monitored throughout the interview
+4. **Cleanup**: Container is automatically removed after completion
+
+## Logging
+
+The container manager provides detailed logging:
+
+- Container creation events
+- Container status changes
+- Error events
+- Health check results
+
+## Security
+
+- Container isolation using Docker
+- Resource limits to prevent abuse
+- Secure environment variable handling
+- API token authentication
+
+## Scaling
+
+The container manager supports horizontal scaling:
+
+- Multiple instances can run simultaneously
+- Load balancing support
+- Container distribution across hosts 

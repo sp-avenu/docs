@@ -1,0 +1,111 @@
+# EVA AI Interviewer Architecture
+
+EVA (Enhanced Virtual Assistant) is an AI-powered interview system that conducts automated interviews with candidates. The system consists of three main components:
+
+## System Overview
+
+![EVA System Architecture](/images/EvaServer.png)
+
+The EVA system is built on a microservices architecture with the following components:
+
+1. **EVA Server** - FastAPI-based server that handles interview room creation and management
+2. **Container Manager** - Orchestrates EVA bot containers
+3. **EVA Bot** - The AI interviewer that conducts the actual interview
+
+## Component Details
+
+### 1. EVA Server
+
+The EVA Server is a FastAPI application that serves as the main entry point for the system. It handles:
+
+- Interview room creation and management
+- Authentication and authorization
+- Interview status tracking
+- Integration with external services
+
+Key features:
+- RESTful API endpoints for room management
+- Token-based authentication
+- Integration with Daily.co for video conferencing
+- AWS S3 integration for storing interview data
+
+### 2. Container Manager
+
+The Container Manager is responsible for orchestrating EVA bot containers. It:
+
+- Manages the lifecycle of interview bot containers
+- Handles container resource allocation
+- Provides health monitoring and status updates
+- Supports both ECR and local container images
+
+Key features:
+- Docker container management
+- Automatic container cleanup
+- Health check endpoints
+- Error handling and logging
+
+### 3. EVA Bot
+
+The EVA Bot is the AI interviewer that conducts the actual interview. It:
+
+- Handles real-time audio/video communication
+- Processes candidate responses
+- Generates interview questions
+- Creates interview reports
+
+Key features:
+- Real-time speech-to-text and text-to-speech
+- Natural language processing
+- Interview transcript generation
+- Automated report generation
+- Integration with LLM services (Anthropic, OpenAI)
+
+## Data Flow
+
+![EVA Data Flow](/images/EvaBot.png)
+
+1. Client requests an interview session
+2. EVA Server creates a room and generates tokens
+3. Container Manager spins up an EVA Bot container
+4. EVA Bot connects to the room and conducts the interview
+5. Interview data is stored in AWS S3
+6. Reports are generated and sent to the client
+
+## Integration Points
+
+![EVA Integration](/images/EvaFetch.png)
+
+The system integrates with several external services:
+
+- **Daily.co** - Video conferencing platform
+- **AWS S3** - Storage for interview data
+- **AWS ECR** - Container registry
+- **LLM Services** - AI model providers
+- **TTS Services** - Text-to-speech providers
+
+## Security
+
+The system implements several security measures:
+
+- API token authentication
+- Secure container management
+- Encrypted data storage
+- Secure communication channels
+
+## Monitoring and Logging
+
+Each component implements comprehensive logging:
+
+- Request/response logging
+- Error tracking
+- Performance monitoring
+- Container health checks
+
+## Deployment
+
+The system is designed for cloud deployment with:
+
+- Containerized components
+- Scalable architecture
+- Load balancing support
+- Automated deployment pipelines 

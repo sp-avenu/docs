@@ -1,0 +1,134 @@
+# EVA Bot API Reference
+
+The EVA Bot is the AI interviewer component that conducts automated interviews. This document provides detailed information about the bot's functionality and configuration.
+
+## Overview
+
+The EVA Bot is a containerized application that:
+- Conducts real-time interviews via video/audio
+- Processes candidate responses
+- Generates interview questions
+- Creates interview reports
+
+## Configuration
+
+### Environment Variables
+
+The bot requires the following environment variables:
+
+- `URL`: Daily.co room URL
+- `TOKEN`: Authentication token
+- `INTERVIEWEE_ID`: Candidate ID
+- `ANTHROPIC_API_KEY`: API key for Claude LLM
+- `ELEVENLABS_API_KEY`: API key for TTS service
+- `ELEVENLABS_VOICE_ID`: Voice ID for TTS
+- `BUCKET`: AWS S3 bucket for storage
+- `BUCKET_AUDIO`: AWS S3 bucket for audio storage
+
+## Features
+
+### 1. Real-time Communication
+
+The bot uses Daily.co for real-time video/audio communication:
+- WebRTC-based video/audio streaming
+- Real-time transcription
+- Voice activity detection
+- Audio processing
+
+### 2. AI Processing
+
+The bot integrates with multiple AI services:
+- **Claude LLM** (Anthropic) for interview logic
+- **ElevenLabs** for text-to-speech
+- **Silero VAD** for voice activity detection
+
+### 3. Interview Management
+
+The bot handles the complete interview lifecycle:
+- Initial greeting and introduction
+- Question generation based on candidate profile
+- Response processing and follow-up questions
+- Interview conclusion and report generation
+
+### 4. Data Storage
+
+The bot stores interview data in AWS S3:
+- Interview transcripts
+- Audio recordings
+- Interview reports
+- Candidate responses
+
+## Pipeline Components
+
+The bot uses a pipeline architecture with the following components:
+
+1. **Daily Transport**
+   - Handles video/audio communication
+   - Manages room connections
+   - Processes real-time data
+
+2. **LLM Service**
+   - Processes candidate responses
+   - Generates interview questions
+   - Manages conversation flow
+
+3. **TTS Service**
+   - Converts text to speech
+   - Manages voice settings
+   - Handles audio output
+
+4. **Audio Processing**
+   - Manages audio buffers
+   - Handles audio recording
+   - Processes voice data
+
+## Interview Flow
+
+1. **Initialization**
+   - Loads candidate profile
+   - Sets up interview context
+   - Initializes AI services
+
+2. **Interview Process**
+   - Greets candidate
+   - Asks questions
+   - Processes responses
+   - Generates follow-up questions
+
+3. **Conclusion**
+   - Ends interview
+   - Generates report
+   - Saves data
+   - Cleans up resources
+
+## Error Handling
+
+The bot implements comprehensive error handling:
+- Connection errors
+- Audio processing errors
+- AI service errors
+- Storage errors
+
+## Logging
+
+The bot provides detailed logging:
+- Interview events
+- AI interactions
+- Audio processing
+- Error events
+
+## Security
+
+The bot implements several security measures:
+- Secure API key handling
+- Encrypted communication
+- Secure data storage
+- Container isolation
+
+## Performance
+
+The bot is optimized for:
+- Low latency communication
+- Efficient resource usage
+- Scalable architecture
+- Reliable operation 
