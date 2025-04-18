@@ -4,7 +4,7 @@ EVA (Enhanced Virtual Assistant) is an AI-powered interview system that conducts
 
 ## System Overview
 
-![EVA System Architecture](/images/EvaServer.png)
+![EVA System Architecture](/images/DataFlow.png)
 
 The EVA system is built on a microservices architecture with the following components:
 
@@ -15,6 +15,7 @@ The EVA system is built on a microservices architecture with the following compo
 ## Component Details
 
 ### 1. EVA Server
+![EVA Server](/images/EvaServer.png)
 
 The EVA Server is a FastAPI application that serves as the main entry point for the system. It handles:
 
@@ -45,6 +46,7 @@ Key features:
 - Error handling and logging
 
 ### 3. EVA Bot
+![EVA Bot](/images/evaBot.png)
 
 The EVA Bot is the AI interviewer that conducts the actual interview. It:
 
@@ -62,7 +64,7 @@ Key features:
 
 ## Data Flow
 
-![EVA Data Flow](/images/EvaBot.png)
+![EVA Data Flow](/images/EvaArch.png)
 
 1. Client requests an interview session
 2. EVA Server creates a room and generates tokens
@@ -71,17 +73,6 @@ Key features:
 5. Interview data is stored in AWS S3
 6. Reports are generated and sent to the client
 
-## Integration Points
-
-![EVA Integration](/images/EvaFetch.png)
-
-The system integrates with several external services:
-
-- **Daily.co** - Video conferencing platform
-- **AWS S3** - Storage for interview data
-- **AWS ECR** - Container registry
-- **LLM Services** - AI model providers
-- **TTS Services** - Text-to-speech providers
 
 ## Security
 

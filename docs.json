@@ -47,8 +47,8 @@
     }
   },
   "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
+    "light": "/logo/avenu.svg",
+    "dark": "/logo/avenu.svg"
   },
   "navbar": {
     "links": [
