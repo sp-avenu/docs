@@ -16,9 +16,7 @@
           {
             "group": "Get Started",
             "pages": [
-              "introduction",
-              "quickstart",
-              "development"
+              "introduction"
             ]
           },
           {
@@ -45,11 +43,6 @@
     ],
     "global": {
       "anchors": [
-        {
-          "anchor": "Documentation",
-          "href": "https://docs.example.com",
-          "icon": "book-open-cover"
-        }
       ]
     }
   },
